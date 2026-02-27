@@ -6,12 +6,9 @@
     <title>Ronak Kumar | CAD & AI Designer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <!-- Three.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Model Viewer Library for 3D Pop-outs -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
     
     <style>
@@ -61,7 +58,6 @@
             overflow: hidden;
         }
 
-        /* Inner reflection effect */
         .glass-card::before {
             content: "";
             position: absolute;
@@ -76,9 +72,7 @@
             z-index: 1;
         }
 
-        .glass-card:hover::before {
-            left: 150%;
-        }
+        .glass-card:hover::before { left: 150%; }
 
         .glass-card:hover {
             background: rgba(255, 255, 255, 0.45);
@@ -103,9 +97,7 @@
             transition: width 0.3s;
         }
 
-        .nav-link:hover::after {
-            width: 100%;
-        }
+        .nav-link:hover::after { width: 100%; }
 
         #wave-canvas {
             position: fixed;
@@ -130,16 +122,13 @@
             border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
-        .hero-title {
-            text-shadow: 0 0 50px rgba(255,255,255,1);
-        }
+        .hero-title { text-shadow: 0 0 50px rgba(255,255,255,1); }
 
         .tilt-box {
             transition: transform 0.25s ease-out;
             transform-style: preserve-3d;
         }
 
-        /* Glowing text for headers */
         .section-header {
             letter-spacing: -0.02em;
             background: linear-gradient(180deg, #1a1a1a 0%, #4a4a4a 100%);
@@ -170,9 +159,7 @@
             z-index: 1;
         }
 
-        .deck-source, .deck-target {
-            cursor: pointer;
-        }
+        .deck-source, .deck-target { cursor: pointer; }
 
         .deck-label {
             position: absolute;
@@ -187,7 +174,6 @@
             opacity: 0.5;
         }
 
-        /* Card Container (Layer between slots) */
         #card-layer {
             position: absolute;
             inset: 0;
@@ -195,7 +181,6 @@
             z-index: 10;
         }
 
-        /* Card Object */
         .card {
             width: 300px;
             height: 440px;
@@ -208,9 +193,7 @@
             pointer-events: none;
         }
 
-        .card.active {
-            pointer-events: auto;
-        }
+        .card.active { pointer-events: auto; }
 
         .card-face {
             position: absolute;
@@ -225,7 +208,7 @@
             overflow: hidden;
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(15px);
-            z-index: 2; /* To sit above the glass card reflection */
+            z-index: 2;
         }
 
         .card-back {
@@ -298,9 +281,7 @@
 </head>
 <body>
 
-    <!-- Wrapper to handle blur when modal opens -->
     <div id="main-content">
-        <!-- Navigation -->
         <nav class="fixed w-full z-50 nav-glass py-4 px-6 md:px-12">
             <div class="max-w-7xl mx-auto flex justify-between items-center">
                 <div class="text-2xl font-black tracking-tighter">
@@ -319,7 +300,6 @@
             </div>
         </nav>
 
-        <!-- Hero Section -->
         <section id="about" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
             <canvas id="wave-canvas"></canvas>
             <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
@@ -345,21 +325,18 @@
                 </div>
                 
                 <div class="relative tilt-box" data-aos="zoom-in" data-aos-duration="1200" id="hero-visual">
-                    <!-- Achievement Box (Glassy) -->
                     <div class="absolute -top-6 -right-6 z-20 glass-card p-7 achievement-badge rounded-2xl shadow-2xl border-white/80">
                         <div class="text-blue-600 font-black text-4xl mb-1 italic">TOP 16</div>
                         <div class="text-[10px] uppercase tracking-[0.2em] font-black text-gray-500">World Championship</div>
                         <div class="text-[9px] text-gray-400 font-bold uppercase tracking-widest mt-1">TooTallToby CAD 2025</div>
                     </div>
                     
-                    <!-- Main Visual Glass Container -->
                     <div class="aspect-square rounded-[3rem] border border-white/80 p-5 relative glass-card shadow-2xl overflow-hidden">
                         <div class="w-full h-full rounded-[2.5rem] bg-gradient-to-br from-white/20 to-blue-50/10 flex items-center justify-center overflow-hidden relative border border-white/40">
                             <i class="fas fa-drafting-compass text-[10rem] text-blue-200/50"></i>
                         </div>
                     </div>
 
-                    <!-- Floating Stats (Glassy) -->
                     <div class="absolute bottom-10 -left-12 glass-card p-6 rounded-2xl border-l-4 border-blue-600 shadow-2xl">
                         <div class="flex items-center gap-5">
                             <div class="bg-blue-600 text-white p-3 rounded-xl shadow-lg">
@@ -375,7 +352,6 @@
             </div>
         </section>
 
-        <!-- Stats Section -->
         <div class="py-20 relative z-10">
             <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
                 <div class="glass-card p-8 rounded-3xl text-center" data-aos="fade-up">
@@ -397,7 +373,6 @@
             </div>
         </div>
 
-        <!-- Skills Section -->
         <section id="skills" class="py-32 px-6 relative z-10">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-20">
@@ -442,7 +417,6 @@
             </div>
         </section>
 
-        <!-- Interactive 3D Projects Deck Section -->
         <section id="projects" class="py-32 px-6 relative z-10">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16">
@@ -451,15 +425,10 @@
                 </div>
                 
                 <div class="dealer-surface" id="table" data-aos="zoom-in" data-aos-duration="1000">
-                    <!-- Layer for dealing cards -->
                     <div id="card-layer"></div>
-
-                    <!-- Left Slot -->
                     <div class="slot deck-source" id="deck-slot">
                         <div class="deck-label">Deal Forward</div>
                     </div>
-
-                    <!-- Right Slot -->
                     <div class="slot deck-target" id="played-slot">
                         <div class="deck-label">Recall Backward</div>
                     </div>
@@ -481,7 +450,6 @@
         </footer>
     </div>
 
-    <!-- 3D INTERACTIVE POP-OUT MODAL -->
     <div id="model-modal">
         <div class="modal-content glass-card p-4">
             <button onclick="closeModal()" class="absolute top-8 right-8 text-white text-3xl bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all z-[10000]">
@@ -491,38 +459,14 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        // Import your projects data from the separate file
+        import { projects } from './projectsData.js';
+
         // AOS Animation
         AOS.init({ once: true, mirror: false, offset: 50 });
 
         // --- 3D DECK LOGIC ---
-        const projects = [
-            { 
-                title: "Robotic Arm", 
-                desc: "High-precision 6-axis manipulator assembly.",
-                img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800",
-                model: "https://modelviewer.dev/shared-assets/models/RobotExpressive.glb"
-            },
-            { 
-                title: "Astronaut Suit", 
-                desc: "Complex surfacing for life support systems.",
-                img: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&q=80&w=800",
-                model: "https://modelviewer.dev/shared-assets/models/Astronaut.glb"
-            },
-            { 
-                title: "Aero Helmet", 
-                desc: "Impact-optimized safety gear for manufacturing.",
-                img: "https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&q=80&w=800",
-                model: "https://modelviewer.dev/shared-assets/models/glTF-Sample-Assets/Models/FlightHelmet/glTF-Binary/FlightHelmet.glb"
-            },
-            { 
-                title: "Engine Hub", 
-                desc: "Precision threaded automotive component assembly.",
-                img: "https://images.unsplash.com/photo-1486496146582-9ffcd0b2b2b7?auto=format&fit=crop&q=80&w=800",
-                model: "https://modelviewer.dev/shared-assets/models/glTF-Sample-Assets/Models/ToyCar/glTF-Binary/ToyCar.glb"
-            }
-        ];
-
         let currentIndex = 0; 
         let isAnimating = false;
         const cardLayer = document.getElementById('card-layer');
@@ -574,17 +518,14 @@
             const oldRight = rightCardObj;
             const movingToRight = leftCardObj;
 
-            // Move old right card out
             oldRight.style.transform = `translate(-50%, -50%) translateX(800px) rotateY(180deg) rotateZ(10deg)`;
             oldRight.style.opacity = "0";
             setTimeout(() => oldRight.remove(), 800);
 
-            // Move left to right
             const rot = (Math.random() * 8 - 4);
             movingToRight.style.transform = `translate(-50%, -50%) translateX(210px) rotateY(180deg) rotateZ(${rot}deg)`;
             rightCardObj = movingToRight;
 
-            // New left card
             currentIndex = (currentIndex + 1) % projects.length;
             const nextIdx = (currentIndex + 1) % projects.length;
             const newLeft = createCard(projects[nextIdx], 'left');
@@ -607,16 +548,13 @@
             const oldLeft = leftCardObj;
             const movingToLeft = rightCardObj;
 
-            // Move old left card out
             oldLeft.style.transform = `translate(-50%, -50%) translateX(-800px) rotateY(180deg) rotateZ(-10deg)`;
             oldLeft.style.opacity = "0";
             setTimeout(() => oldLeft.remove(), 800);
 
-            // Move right to left
             movingToLeft.style.transform = `translate(-50%, -50%) translateX(-210px) rotateY(180deg)`;
             leftCardObj = movingToLeft;
 
-            // New right card
             currentIndex = (currentIndex - 1 + projects.length) % projects.length;
             const newRight = createCard(projects[currentIndex], 'right');
             newRight.style.opacity = "0";
@@ -632,6 +570,17 @@
             setTimeout(() => isAnimating = false, 800);
         }
 
+        // Initialize cards once projects are loaded
+        rightCardObj = createCard(projects[0], 'right');
+        leftCardObj = createCard(projects[1], 'left');
+
+        // Export functions to global scope for button clicks
+        window.dealForward = dealForward;
+        window.recallBackward = recallBackward;
+    </script>
+
+    <script>
+        // --- MODAL & BACKGROUND FLOW LOGIC (Non-Module) ---
         window.openModel = function(url, event) {
             if (event) event.stopPropagation();
             const modal = document.getElementById('model-modal');
@@ -648,7 +597,6 @@
         window.closeModal = function() {
             const modal = document.getElementById('model-modal');
             const main = document.getElementById('main-content');
-            
             modal.classList.remove('visible');
             setTimeout(() => modal.style.display = 'none', 400);
             main.classList.remove('blur-active');
@@ -656,47 +604,25 @@
             document.getElementById('active-viewer').src = "";
         };
 
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
+        window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-
-        // --- BACKGROUND LIQUID FLOW LOGIC ---
-        let scene, camera, renderer, light, pointLight;
+        // --- THREE.JS BACKGROUND ---
+        let scene, camera, renderer, meshes = [], mouseX = 0, mouseY = 0, targetX = 0, targetY = 0, scrollY = 0;
         const STRANDS_COUNT = 12;
-        const meshes = [];
-        
-        let mouseX = 0, mouseY = 0;
-        let targetX = 0, targetY = 0;
-        let scrollY = 0;
 
         function initWaves() {
             const canvas = document.getElementById('wave-canvas');
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-            
             renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            // Ambient lighting for clean glass look
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
-            scene.add(ambientLight);
-
-            // Blue specular point lights
-            const blueLight = new THREE.PointLight(0x0066ff, 2.5);
-            blueLight.position.set(0, 10, 15);
-            scene.add(blueLight);
-
-            const whiteHighlight = new THREE.PointLight(0xffffff, 2);
-            whiteHighlight.position.set(-15, 5, 10);
-            scene.add(whiteHighlight);
-
-            // Pure Blue Palette
+            scene.add(new THREE.AmbientLight(0xffffff, 0.9));
+            const bL = new THREE.PointLight(0x0066ff, 2.5); bL.position.set(0, 10, 15); scene.add(bL);
             const blueShades = [0x0077ff, 0x00aaff, 0x00ffff, 0x3366ff, 0x0033ff, 0x99ccff];
 
             for (let i = 0; i < STRANDS_COUNT; i++) {
-                // Orderly Path: Parallel flowing curves
                 const yPos = (i - STRANDS_COUNT / 2) * 1.8;
                 const path = new THREE.CatmullRomCurve3([
                     new THREE.Vector3(-30, yPos, 0),
@@ -704,29 +630,10 @@
                     new THREE.Vector3(12, yPos - Math.sin(i * 0.5) * 3, -Math.cos(i * 0.5) * 3),
                     new THREE.Vector3(30, yPos, 0)
                 ]);
-
-                const geometry = new THREE.TubeGeometry(path, 150, 0.45, 16, false);
-                const material = new THREE.MeshPhongMaterial({
-                    color: blueShades[i % blueShades.length],
-                    transparent: true,
-                    opacity: 0.2,
-                    shininess: 300,
-                    specular: 0xffffff,
-                    side: THREE.DoubleSide
-                });
-
-                const mesh = new THREE.Mesh(geometry, material);
-                
-                mesh.userData = {
-                    offset: i * 0.6,
-                    speed: 0.1 + (i * 0.01),
-                    yBase: yPos
-                };
-                
-                scene.add(mesh);
-                meshes.push(mesh);
+                const mesh = new THREE.Mesh(new THREE.TubeGeometry(path, 150, 0.45, 16, false), new THREE.MeshPhongMaterial({ color: blueShades[i % blueShades.length], transparent: true, opacity: 0.2, shininess: 300 }));
+                mesh.userData = { offset: i * 0.6, speed: 0.1 + (i * 0.01), yBase: yPos };
+                scene.add(mesh); meshes.push(mesh);
             }
-
             camera.position.z = 20;
             animate();
         }
@@ -734,59 +641,21 @@
         function animate() {
             requestAnimationFrame(animate);
             const time = Date.now() * 0.001;
-            
-            targetX += (mouseX - targetX) * 0.06;
-            targetY += (mouseY - targetY) * 0.06;
-
-            meshes.forEach((mesh, index) => {
-                const { offset, speed, yBase } = mesh.userData;
-                
-                // ORDERLY FLOW + SCROLL PARALLAX
-                mesh.position.y = yBase + Math.sin(time * speed + offset) * 2 + (scrollY * 0.003);
-                mesh.position.x = Math.sin(time * 0.05 + offset) * 1;
-                
-                // Subtle rotation for light-catching effect
-                mesh.rotation.x = Math.sin(time * 0.1 + offset) * 0.15;
-                
-                // Follow Mouse tilting
-                mesh.rotation.y = targetX * 0.4;
-                mesh.rotation.z = -targetY * 0.15;
+            targetX += (mouseX - targetX) * 0.06; targetY += (mouseY - targetY) * 0.06;
+            meshes.forEach(m => {
+                const { offset, speed, yBase } = m.userData;
+                m.position.y = yBase + Math.sin(time * speed + offset) * 2 + (scrollY * 0.003);
+                m.rotation.y = targetX * 0.4; m.rotation.z = -targetY * 0.15;
             });
-            
             renderer.render(scene, camera);
         }
 
-        // Interaction Listeners
         document.addEventListener('mousemove', (e) => {
             mouseX = (e.clientX / window.innerWidth - 0.5);
             mouseY = (e.clientY / window.innerHeight - 0.5);
-            
-            const heroVisual = document.getElementById('hero-visual');
-            if(heroVisual) {
-                const rotX = (e.clientY / window.innerHeight - 0.5) * 18;
-                const rotY = (e.clientX / window.innerWidth - 0.5) * -18;
-                heroVisual.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-            }
         });
-
-        window.addEventListener('scroll', () => {
-            scrollY = window.scrollY;
-        });
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        window.onload = function() {
-            // Start the background animation
-            initWaves();
-            
-            // Deal the initial cards for the 3D Catalog
-            rightCardObj = createCard(projects[0], 'right');
-            leftCardObj = createCard(projects[1], 'left');
-        }
+        window.addEventListener('scroll', () => scrollY = window.scrollY);
+        window.onload = initWaves;
     </script>
 </body>
 </html>
