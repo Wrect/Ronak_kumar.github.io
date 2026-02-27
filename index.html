@@ -1,58 +1,457 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <title>Ronak Kumar | CAD & AI Designer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        :root {
+            --primary: #0066ff;
+            --primary-light: #3399ff;
+            --bg-light: #ffffff;
+            --text-main: #1a1a1a;
+            --text-muted: #4b5563;
+        }
 
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .blue-gradient {
+            background: linear-gradient(135deg, #0066ff 0%, #0033aa 100%);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #0066ff, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ADVANCED GLASSMORPHISM */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(25px) saturate(200%);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 40px rgba(0, 50, 150, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Inner reflection effect */
+        .glass-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-25deg);
+            transition: 0.75s;
+            pointer-events: none;
+        }
+
+        .glass-card:hover::before {
+            left: 150%;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.45);
+            border-color: rgba(0, 102, 255, 0.4);
+            transform: translateY(-12px) scale(1.01);
+            box-shadow: 0 30px 60px -15px rgba(0, 102, 255, 0.2);
+        }
+
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        #wave-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0.3); }
+            70% { box-shadow: 0 0 0 25px rgba(0, 102, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0); }
+        }
+        
+        .achievement-badge {
+            animation: pulse-blue 2.5s infinite;
+            background: rgba(255,255,255,0.8) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .hero-title {
+            text-shadow: 0 0 50px rgba(255,255,255,1);
+        }
+
+        .tilt-box {
+            transition: transform 0.25s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        /* Glowing text for headers */
+        .section-header {
+            letter-spacing: -0.02em;
+            background: linear-gradient(180deg, #1a1a1a 0%, #4a4a4a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
 <body>
-    <nav>
-        <div class="logo">Portfolio.</div>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 nav-glass py-4 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="text-2xl font-black tracking-tighter">
+                RONAK <span class="text-blue-600 font-normal">KUMAR</span>
+            </div>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="nav-link text-xs uppercase tracking-widest font-bold text-gray-700">About</a>
+                <a href="#skills" class="nav-link text-xs uppercase tracking-widest font-bold text-gray-700">Skills</a>
+                <a href="#projects" class="nav-link text-xs uppercase tracking-widest font-bold text-gray-700">Projects</a>
+                <a href="#experience" class="nav-link text-xs uppercase tracking-widest font-bold text-gray-700">Education</a>
+                <a href="#contact" class="blue-gradient px-7 py-2.5 rounded-full text-xs font-bold transition-all uppercase tracking-widest text-white shadow-xl shadow-blue-500/30 hover:scale-105 active:scale-95">Hire Me</a>
+            </div>
+            <div class="md:hidden text-2xl text-gray-800">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
     </nav>
 
-    <section id="home" class="hero">
-        <h1>Hi, I'm <span class="highlight">Your Name</span></h1>
-        <p>A Creative Developer & Designer based in the digital world.</p>
-        <a href="#projects" class="btn">View My Work</a>
-    </section>
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <canvas id="wave-canvas"></canvas>
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+            <div data-aos="fade-right" data-aos-duration="1200">
+                <span class="inline-block py-1.5 px-4 rounded-full bg-blue-50/50 backdrop-blur-md border border-blue-100 text-blue-600 text-xs font-bold uppercase tracking-[0.2em] mb-8 shadow-sm">
+                    Mechanical & AI Engineer
+                </span>
+                <h1 class="text-6xl md:text-8xl font-black leading-none mb-6 text-gray-900 hero-title tracking-tight">
+                    LIQUID <br> 
+                    <span class="text-gradient uppercase">FLOW.</span>
+                </h1>
+                <p class="text-gray-600 text-lg md:text-xl max-w-lg mb-10 leading-relaxed font-medium">
+                    B.Voc D.M.T Student at <span class="text-blue-600 font-bold uppercase tracking-tighter">YMCA University</span>. Expert in CAD modeling, AI automation, and fluid structural engineering.
+                </p>
+                <div class="flex flex-wrap gap-5">
+                    <a href="#projects" class="blue-gradient px-9 py-4 rounded-full font-bold text-white transition hover:scale-105 active:scale-95 shadow-2xl shadow-blue-600/30">
+                        Explore Work
+                    </a>
+                    <a href="#contact" class="glass-card px-9 py-4 rounded-full font-bold text-gray-700 hover:bg-white/80 transition">
+                        Get In Touch
+                    </a>
+                </div>
+            </div>
+            
+            <div class="relative tilt-box" data-aos="zoom-in" data-aos-duration="1200" id="hero-visual">
+                <!-- Achievement Box (Glassy) -->
+                <div class="absolute -top-6 -right-6 z-20 glass-card p-7 achievement-badge rounded-2xl shadow-2xl border-white/80">
+                    <div class="text-blue-600 font-black text-4xl mb-1 italic">TOP 16</div>
+                    <div class="text-[10px] uppercase tracking-[0.2em] font-black text-gray-500">World Championship</div>
+                    <div class="text-[9px] text-gray-400 font-bold uppercase tracking-widest mt-1">TooTallToby CAD 2025</div>
+                </div>
+                
+                <!-- Main Visual Glass Container -->
+                <div class="aspect-square rounded-[3rem] border border-white/80 p-5 relative glass-card shadow-2xl overflow-hidden">
+                    <div class="w-full h-full rounded-[2.5rem] bg-gradient-to-br from-white/20 to-blue-50/10 flex items-center justify-center overflow-hidden relative border border-white/40">
+                        <i class="fas fa-drafting-compass text-[10rem] text-blue-200/50"></i>
+                    </div>
+                </div>
 
-    <section id="projects">
-        <h2>My Projects</h2>
-        <div class="project-grid">
-            <div class="project-card">
-                <div class="placeholder">Project 1</div>
-                <h3>Project Title</h3>
-                <p>A brief description of the cool things you built.</p>
-            </div>
-            <div class="project-card">
-                <div class="placeholder">Project 2</div>
-                <h3>Project Title</h3>
-                <p>A brief description of the cool things you built.</p>
-            </div>
-            <div class="project-card">
-                <div class="placeholder">Project 3</div>
-                <h3>Project Title</h3>
-                <p>A brief description of the cool things you built.</p>
+                <!-- Floating Stats (Glassy) -->
+                <div class="absolute bottom-10 -left-12 glass-card p-6 rounded-2xl border-l-4 border-blue-600 shadow-2xl">
+                    <div class="flex items-center gap-5">
+                        <div class="bg-blue-600 text-white p-3 rounded-xl shadow-lg">
+                            <i class="fas fa-cube text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm font-black text-gray-800 uppercase tracking-tight">3D Specialist</div>
+                            <div class="text-[10px] text-gray-500 uppercase tracking-[0.15em] font-bold">SolidWorks & AutoCAD</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="contact">
-        <h2>Get In Touch</h2>
-        <p>Ready to start a project? Email me at: <strong>hello@email.com</strong></p>
+    <!-- Stats Section -->
+    <div class="py-20 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="glass-card p-8 rounded-3xl text-center" data-aos="fade-up">
+                <div class="text-5xl font-black text-gray-900 tracking-tighter italic">90.8<span class="text-blue-600 text-2xl">%</span></div>
+                <div class="text-[10px] text-blue-600 uppercase font-bold tracking-[0.3em] mt-3">10th Class Performance</div>
+            </div>
+            <div class="glass-card p-8 rounded-3xl text-center" data-aos="fade-up" data-aos-delay="100">
+                <div class="text-5xl font-black text-gray-900 tracking-tighter italic">TOP 20</div>
+                <div class="text-[10px] text-blue-600 uppercase font-bold tracking-[0.3em] mt-3">Global CAD Ranking</div>
+            </div>
+            <div class="glass-card p-8 rounded-3xl text-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="text-5xl font-black text-gray-900 tracking-tighter italic">12<span class="text-blue-600 text-2xl">+</span></div>
+                <div class="text-[10px] text-blue-600 uppercase font-bold tracking-[0.3em] mt-3">Team Lead (Months)</div>
+            </div>
+            <div class="glass-card p-8 rounded-3xl text-center" data-aos="fade-up" data-aos-delay="300">
+                <div class="text-5xl font-black text-gray-900 tracking-tighter italic">76.6<span class="text-blue-600 text-2xl">%</span></div>
+                <div class="text-[10px] text-blue-600 uppercase font-bold tracking-[0.3em] mt-3">12th Class Performance</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-32 px-6 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl font-black uppercase tracking-tighter text-gray-900 mb-4 section-header">Technical <span class="text-blue-600 italic">Arsenal</span></h2>
+                <p class="text-gray-500 font-medium">Fusing traditional engineering with the future of automation.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="glass-card p-12 rounded-[3rem]" data-aos="fade-up">
+                    <div class="w-16 h-16 blue-gradient rounded-[1.25rem] flex items-center justify-center mb-10 shadow-xl shadow-blue-500/40">
+                        <i class="fas fa-drafting-compass text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-black mb-6 text-gray-900 uppercase italic">CAD Modeling</h3>
+                    <ul class="space-y-5 text-gray-600 font-semibold text-sm">
+                        <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-blue-500"></span> SolidWorks (3D Master)</li>
+                        <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-blue-500"></span> AutoCAD (2D/3D Design)</li>
+                        <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Structural Analysis</li>
+                    </ul>
+                </div>
+                <div class="glass-card p-12 rounded-[3rem]" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-gray-900 rounded-[1.25rem] flex items-center justify-center mb-10 shadow-2xl">
+                        <i class="fas fa-brain text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-black mb-6 text-gray-900 uppercase italic">AI Systems</h3>
+                    <ul class="space-y-5 text-gray-600 font-semibold text-sm">
+                        <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-blue-500"></span> AI Vibe Coding</li>
+                        <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-blue-500"></span> LLM Workflow Design</li>
+                        <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Automation Strategy</li>
+                    </ul>
+                </div>
+                <div class="glass-card p-12 rounded-[3rem]" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-blue-50 rounded-[1.25rem] flex items-center justify-center mb-10 border border-blue-100 shadow-sm">
+                        <i class="fas fa-users-cog text-blue-600 text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-black mb-6 text-gray-900 uppercase italic">Coordination</h3>
+                    <ul class="space-y-5 text-gray-600 font-semibold text-sm">
+                        <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Esports Roster Mgmt.</li>
+                        <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Performance Metrics</li>
+                        <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Team Leadership</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <footer>
-        <p>&copy; 2026 Your Name. Built with curiosity.</p>
-    </footer>
-</body>
+    <!-- Projects Section -->
+    <section id="projects" class="py-32 px-6 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-24">
+                <h2 class="text-5xl font-black uppercase tracking-tighter text-gray-900 mb-4 section-header">Engineering <span class="text-blue-600 underline decoration-blue-200 underline-offset-[12px]">Portfolio</span></h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-16">
+                <div class="group cursor-pointer glass-card p-5 rounded-[4rem]" data-aos="fade-right">
+                    <div class="relative overflow-hidden rounded-[3.5rem] bg-blue-50 aspect-video flex items-center justify-center mb-10 transition-transform duration-700">
+                        <i class="fas fa-fan text-[120px] text-blue-200 group-hover:text-blue-500 group-hover:rotate-[360deg] transition duration-[2000ms]"></i>
+                        <div class="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/5 transition duration-700"></div>
+                    </div>
+                    <div class="px-8 pb-10 text-center">
+                        <h3 class="text-3xl font-black text-gray-900 uppercase italic mb-4">Jet Engine Model</h3>
+                        <p class="text-gray-500 font-medium leading-relaxed">Structural design and aerodynamic assembly of a functional mini-model jet engine, optimized for precision modeling.</p>
+                    </div>
+                </div>
+                <div class="group cursor-pointer glass-card p-5 rounded-[4rem]" data-aos="fade-left">
+                    <div class="relative overflow-hidden rounded-[3.5rem] bg-zinc-900 aspect-video flex items-center justify-center mb-10 transition-transform duration-700">
+                        <i class="fas fa-wand-sparkles text-[120px] text-white/10 group-hover:scale-125 group-hover:text-blue-400 transition duration-1000"></i>
+                        <div class="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition duration-700"></div>
+                    </div>
+                    <div class="px-8 pb-10 text-center">
+                        <h3 class="text-3xl font-black text-gray-900 uppercase italic mb-4">AI Visual Engine</h3>
+                        <p class="text-gray-500 font-medium leading-relaxed">Automation suite for rapid engineering visualizations and creative asset generation using Gemini API integration.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <footer class="py-24 px-6 border-t border-gray-100/40 text-center relative z-10 glass-card rounded-t-[5rem]">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-4xl font-black mb-6 tracking-tighter text-gray-900 uppercase italic">RONAK <span class="text-blue-600 font-normal">KUMAR</span></div>
+            <div class="flex justify-center gap-10 mb-12">
+                <a href="#" class="text-gray-400 hover:text-blue-600 transition-all text-2xl hover:scale-125"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="text-gray-400 hover:text-blue-600 transition-all text-2xl hover:scale-125"><i class="fab fa-github"></i></a>
+                <a href="#" class="text-gray-400 hover:text-blue-600 transition-all text-2xl hover:scale-125"><i class="fas fa-envelope"></i></a>
+            </div>
+            <div class="text-[11px] text-gray-400 font-black uppercase tracking-[0.5em]">Crafting the intersection of Design & Intelligence</div>
+            <div class="mt-8 text-[10px] text-gray-300 font-bold uppercase tracking-widest italic">© 2026 Ronak Kumar • YMCA University</div>
+        </div>
+    </footer>
+
+    <script>
+        // AOS Animation
+        AOS.init({ once: true, mirror: false, offset: 50 });
+
+        // Orderly Blue Liquid Flow Animation
+        let scene, camera, renderer, light, pointLight;
+        const STRANDS_COUNT = 12;
+        const meshes = [];
+        
+        // Interaction & Flow
+        let mouseX = 0, mouseY = 0;
+        let targetX = 0, targetY = 0;
+        let scrollY = 0;
+
+        function initWaves() {
+            const canvas = document.getElementById('wave-canvas');
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+            
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Ambient lighting for clean glass look
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+            scene.add(ambientLight);
+
+            // Blue specular point lights
+            const blueLight = new THREE.PointLight(0x0066ff, 2.5);
+            blueLight.position.set(0, 10, 15);
+            scene.add(blueLight);
+
+            const whiteHighlight = new THREE.PointLight(0xffffff, 2);
+            whiteHighlight.position.set(-15, 5, 10);
+            scene.add(whiteHighlight);
+
+            // Pure Blue Palette
+            const blueShades = [0x0077ff, 0x00aaff, 0x00ffff, 0x3366ff, 0x0033ff, 0x99ccff];
+
+            for (let i = 0; i < STRANDS_COUNT; i++) {
+                // Orderly Path: Parallel flowing curves
+                const yPos = (i - STRANDS_COUNT / 2) * 1.8;
+                const path = new THREE.CatmullRomCurve3([
+                    new THREE.Vector3(-30, yPos, 0),
+                    new THREE.Vector3(-12, yPos + Math.sin(i * 0.5) * 3, Math.cos(i * 0.5) * 3),
+                    new THREE.Vector3(12, yPos - Math.sin(i * 0.5) * 3, -Math.cos(i * 0.5) * 3),
+                    new THREE.Vector3(30, yPos, 0)
+                ]);
+
+                const geometry = new THREE.TubeGeometry(path, 150, 0.45, 16, false);
+                const material = new THREE.MeshPhongMaterial({
+                    color: blueShades[i % blueShades.length],
+                    transparent: true,
+                    opacity: 0.2,
+                    shininess: 300,
+                    specular: 0xffffff,
+                    side: THREE.DoubleSide
+                });
+
+                const mesh = new THREE.Mesh(geometry, material);
+                
+                mesh.userData = {
+                    offset: i * 0.6,
+                    speed: 0.1 + (i * 0.01),
+                    yBase: yPos
+                };
+                
+                scene.add(mesh);
+                meshes.push(mesh);
+            }
+
+            camera.position.z = 20;
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = Date.now() * 0.001;
+            
+            targetX += (mouseX - targetX) * 0.06;
+            targetY += (mouseY - targetY) * 0.06;
+
+            meshes.forEach((mesh, index) => {
+                const { offset, speed, yBase } = mesh.userData;
+                
+                // ORDERLY FLOW + SCROLL PARALLAX
+                mesh.position.y = yBase + Math.sin(time * speed + offset) * 2 + (scrollY * 0.003);
+                mesh.position.x = Math.sin(time * 0.05 + offset) * 1;
+                
+                // Subtle rotation for light-catching effect
+                mesh.rotation.x = Math.sin(time * 0.1 + offset) * 0.15;
+                
+                // Follow Mouse tilting
+                mesh.rotation.y = targetX * 0.4;
+                mesh.rotation.z = -targetY * 0.15;
+            });
+            
+            renderer.render(scene, camera);
+        }
+
+        // Interaction Listeners
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth - 0.5);
+            mouseY = (e.clientY / window.innerHeight - 0.5);
+            
+            const heroVisual = document.getElementById('hero-visual');
+            if(heroVisual) {
+                const rotX = (e.clientY / window.innerHeight - 0.5) * 18;
+                const rotY = (e.clientX / window.innerWidth - 0.5) * -18;
+                heroVisual.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+            }
+        });
+
+        window.addEventListener('scroll', () => {
+            scrollY = window.scrollY;
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        window.onload = function() {
+            initWaves();
+        }
+    </script>
+</body>
 </html>
