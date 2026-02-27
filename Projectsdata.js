@@ -1,10 +1,10 @@
 // projectsData.js
 export const projects = [
     { 
-        title: "Drone Frame V1", 
-        desc: "Lightweight carbon fiber quadcopter chassis designed in SolidWorks.",
-        img: "images/drone-preview.jpg", 
-        model: "models/drone_frame.glb" 
+        title: "Earphone Surfacing Cover", 
+        desc: "",
+        img: "https://github.com/Wrect/Ronak_kumar.github.io/blob/main/modals/earphone%20surfacing%20cover.png", 
+        model: "https://github.com/Wrect/Ronak_kumar.github.io/blob/main/modals/earphone%20surfacing%20cover.glb" 
     },
     { 
         title: "Robotic Arm", 
